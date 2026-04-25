@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Muhammad Shoaib — Agentic AI Developer, Full Stack Architect, and Data Science Expert. MPhil Chemistry scholar bridging science and intelligent digital solutions."
+    />
+    <title>Muhammad Shoaib | Agentic AI Developer & Full Stack Architect</title>
+
+    <!--
+      INLINE THEME SCRIPT — runs synchronously before first paint.
+      Reads localStorage and applies data-theme="dark" to <html> immediately,
+      preventing a Flash of Unstyled Content (FOUC) for returning dark-mode users.
+      The try/catch handles restricted environments where localStorage is unavailable.
+    -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          }
+        } catch (e) { /* noop — private browsing may block localStorage */ }
+      }());
+    </script>
+
+    <!-- Google Fonts: Montserrat (display) + Open Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+
+  <body>
+
+    <!--
+      Skip link — first focusable element. Satisfies WCAG 2.4.1 (Bypass Blocks).
+      Visually off-screen until :focus-visible; slides into viewport on Tab.
+    -->
+    <a href="#main-content" class="skip-link">Skip to Main Content</a>
+
+
+    <!-- =====================================================================
+         HEADER — site-wide identity + navigation + theme control.
+         role="banner" is implicit for a top-level <header> but stated
+         explicitly for older AT compatibility.
+    ===================================================================== -->
+    <header class="site-header" role="banner">
+      <div class="header__inner">
+
+        <a href="/" class="header__brand" aria-label="Muhammad Shoaib — Home">
+          <span class="brand__mark" aria-hidden="true">MS</span>
+          <span class="brand__name">Muhammad Shoaib</span>
+        </a>
+
+        <!--
+          .header__controls groups the theme toggle and the nav so the
+          header's flex layout remains a clean two-child (brand + controls)
+          structure on all viewport sizes.
+        -->
+        <div class="header__controls">
+
+          <!--
+            Theme Toggle — switches between Light (default) and Grounded Dark.
+            Both icons live in the DOM; CSS shows/hides based on [data-theme].
+            aria-label is updated by JS to always reflect the *next* action.
+          -->
+          <button
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Switch to dark mode"
+            title="Toggle colour theme"
+          >
+            <!--
+              aria-hidden="true" on both icons: the button's aria-label
+              carries the full accessible name. Icons are purely decorative here.
+            -->
+            <i data-lucide="moon" class="icon--moon" aria-hidden="true"></i>
+            <i data-lucide="sun"  class="icon--sun"  aria-hidden="true"></i>
+          </button>
+
+          <nav class="site-nav" aria-label="Primary navigation">
+            <button
+              class="nav__toggle"
+              id="navToggle"
+              aria-expanded="false"
+              aria-controls="navMenu"
+              aria-label="Open navigation menu"
+            >
+              <span class="toggle__bar"></span>
+              <span class="toggle__bar"></span>
+              <span class="toggle__bar"></span>
+            </button>
+
+            <ul class="nav__menu" id="navMenu" role="list">
+              <li>
+                <a href="#home" class="nav__link nav__link--active" aria-current="page">
+                  <i data-lucide="home" aria-hidden="true"></i>
+                  <span>Home</span>
+                </a>
+              </li>
+              <li>
+                <a href="#work" class="nav__link">
+                  <i data-lucide="briefcase" aria-hidden="true"></i>
+                  <span>Work</span>
+                </a>
+              </li>
+              <li>
+                <a href="#about" class="nav__link">
+                  <i data-lucide="user" aria-hidden="true"></i>
+                  <span>About</span>
+                </a>
+              </li>
+              <li>
+                <a href="#contact" class="nav__link">
+                  <i data-lucide="mail" aria-hidden="true"></i>
+                  <span>Contact</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+        </div><!-- /header__controls -->
+
+      </div>
+    </header>
+    <!-- /site-header -->
+
+
+    <!-- =====================================================================
+         MAIN — primary content. id="home" is the "Home" nav scroll target.
+    ===================================================================== -->
+    <main class="site-main" id="home" role="main">
+
+      <!--
+        HERO — primary identity + value proposition.
+        id="main-content" is the skip-link scroll target (WCAG 2.4.1).
+        aria-labelledby ties the section landmark to the visible h1 (WCAG 1.3.1).
+      -->
+      <section class="site-hero" aria-labelledby="hero-heading" id="main-content">
+        <div class="hero__inner">
+          <div class="hero__content">
+
+            <p class="hero__eyebrow">
+              <span aria-label="MPhil Chemistry Scholar, turned IT Professional">
+                MPhil Chemistry Scholar &nbsp;&middot;&nbsp; IT Professional
+              </span>
+            </p>
+
+            <!--
+              Sole h1 on the page — all subsequent content headings are h2/h3
+              to preserve a logical document outline (WCAG 1.3.1, 2.4.6).
+            -->
+            <h1 class="hero__title" id="hero-heading">
+              Muhammad <em>Shoaib</em>
+            </h1>
+
+            <!--
+              Role line: aria-label replaces the pipe separators with commas
+              so AT reads it as a natural list rather than "vertical bar".
+            -->
+            <p
+              class="hero__role"
+              aria-label="Agentic AI Developer, Full Stack Architect, and Data Science Expert"
+            >
+              Agentic AI Developer &nbsp;&#124;&nbsp; Full Stack Architect &nbsp;&#124;&nbsp; Data Science Expert
+            </p>
+
+            <p class="hero__subtitle">
+              "Synthesizing Science, Data, and Code into Intelligent Digital Architecture."
+            </p>
+
+            <div class="hero__actions" role="group" aria-label="Portfolio call to action">
+              <a href="#work"    class="hero__cta hero__cta--primary">
+                View My Work
+                <i data-lucide="arrow-right" aria-hidden="true"></i>
+              </a>
+              <a href="#contact" class="hero__cta hero__cta--ghost">
+                Get In Touch
+              </a>
+            </div>
+
+          </div>
+        </div>
+        <div class="hero__decoration" aria-hidden="true"></div>
+      </section>
+      <!-- /site-hero -->
+
+
+      <!--
+        LAYOUT GRID — CSS Grid macro layout.
+        Mobile: 1-column stack. Desktop (1024px+): aside(280px) | section(1fr).
+      -->
+      <div class="layout-grid">
+
+        <!-- SIDEBAR — id="about" is the "About" nav scroll target -->
+        <aside class="site-sidebar" aria-label="Profile and expertise" id="about">
+
+          <!-- Profile Card -->
+          <section class="sidebar__widget" aria-labelledby="widget-profile-title">
+            <div class="profile-card">
+              <div class="profile-card__avatar" aria-hidden="true">MS</div>
+              <div class="profile-card__info">
+                <h2 class="profile-card__name" id="widget-profile-title">Muhammad Shoaib</h2>
+                <p class="profile-card__role">Agentic AI Developer</p>
+              </div>
+            </div>
+            <p class="widget__body">
+              An MPhil Chemistry scholar turned IT professional. I bridge the gap
+              between complex data analysis and high-performance web solutions,
+              specializing in Agentic AI and Responsive Architecture.
+            </p>
+          </section>
+
+          <!-- Core Skills -->
+          <section class="sidebar__widget" aria-labelledby="widget-skills-title">
+            <h2 class="widget__title" id="widget-skills-title">Core Skills</h2>
+            <ul class="tag-list" role="list">
+              <li><span class="tag">Agentic AI</span></li>
+              <li><span class="tag">Python</span></li>
+              <li><span class="tag">TypeScript</span></li>
+              <li><span class="tag">SQL / PL-SQL</span></li>
+              <li><span class="tag">Data Analysis</span></li>
+              <li><span class="tag">R &amp; Power BI</span></li>
+              <li><span class="tag">UI/UX Design</span></li>
+            </ul>
+          </section>
+
+          <!-- Certifications -->
+          <section class="sidebar__widget" aria-labelledby="widget-certs-title">
+            <h2 class="widget__title" id="widget-certs-title">Certifications</h2>
+            <ul class="cert-list" role="list">
+              <li class="cert-item">
+                <span class="cert-item__issuer">Google</span>
+                <span class="cert-item__name">Professional Certificate</span>
+              </li>
+              <li class="cert-item">
+                <span class="cert-item__issuer">Microsoft</span>
+                <span class="cert-item__name">Professional Certificate</span>
+              </li>
+              <li class="cert-item">
+                <span class="cert-item__issuer">IBM</span>
+                <span class="cert-item__name">Professional Certificate</span>
+              </li>
+              <li class="cert-item">
+                <span class="cert-item__issuer">Macquarie University</span>
+                <span class="cert-item__name">Professional Certificate</span>
+              </li>
+            </ul>
+          </section>
+
+        </aside>
+        <!-- /site-sidebar -->
+
+
+        <!-- CONTENT AREA — id="work" is the "Work" nav scroll target -->
+        <section class="content-area" aria-labelledby="featured-title" id="work">
+
+          <h2 class="section__heading" id="featured-title">Featured Projects</h2>
+
+          <div class="article-grid">
+
+            <!--
+              Card 1: first image gets fetchpriority="high" — it is closest
+              to the viewport on wide screens and a likely LCP candidate.
+            -->
+            <article class="card" aria-labelledby="card-1-title">
+              <div class="card__image-wrap">
+                <img
+                  src="https://picsum.photos/seed/storefrontshop/600/340"
+                  alt="A modern e-commerce storefront with product grid, clean typography, and a warm neutral colour palette"
+                  class="card__image"
+                  loading="lazy"
+                  fetchpriority="high"
+                  width="600"
+                  height="340"
+                />
+              </div>
+              <div class="card__body">
+                <span class="card__tag">Next.js</span>
+                <h3 class="card__title" id="card-1-title">
+                  E-Commerce Full-Stack Store
+                </h3>
+                <p class="card__excerpt">
+                  Pixel-perfect UI/UX focused dynamic store built with Next.js
+                  App Router, featuring server components and optimised data fetching.
+                </p>
+                <a href="#" class="card__cta" aria-label="View the E-Commerce Full-Stack Store project details">
+                  View Project
+                  <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+            </article>
+
+            <article class="card" aria-labelledby="card-2-title">
+              <div class="card__image-wrap">
+                <img
+                  src="https://picsum.photos/seed/interactivebook/600/340"
+                  alt="An AI-powered interactive digital textbook with a bilingual chat panel"
+                  class="card__image"
+                  loading="lazy"
+                  width="600"
+                  height="340"
+                />
+              </div>
+              <div class="card__body">
+                <span class="card__tag">Agentic AI</span>
+                <h3 class="card__title" id="card-2-title">
+                  Physical AI Interactive Textbook
+                </h3>
+                <p class="card__excerpt">
+                  AI-powered interactive book with a RAG-chatbot (Gemini) and
+                  real-time Urdu translation support for multilingual learners.
+                </p>
+                <a href="#" class="card__cta" aria-label="View the Physical AI Interactive Textbook project details">
+                  View Project
+                  <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+            </article>
+
+            <article class="card" aria-labelledby="card-3-title">
+              <div class="card__image-wrap">
+                <img
+                  src="https://picsum.photos/seed/taskmanager/600/340"
+                  alt="A full-stack task management dashboard with analytics charts and an AI command bar"
+                  class="card__image"
+                  loading="lazy"
+                  width="600"
+                  height="340"
+                />
+              </div>
+              <div class="card__body">
+                <span class="card__tag">Full Stack PWA</span>
+                <h3 class="card__title" id="card-3-title">
+                  TaskFlow AI Chatbot
+                </h3>
+                <p class="card__excerpt">
+                  Full-stack PWA task manager with natural-language commands,
+                  Recharts analytics dashboard, and offline-first architecture.
+                </p>
+                <a href="#" class="card__cta" aria-label="View the TaskFlow AI Chatbot project details">
+                  View Project
+                  <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+            </article>
+
+            <article class="card" aria-labelledby="card-4-title">
+              <div class="card__image-wrap">
+                <img
+                  src="https://picsum.photos/seed/resumebuilder/600/340"
+                  alt="A professional resume builder with template selection and live ATS-score preview"
+                  class="card__image"
+                  loading="lazy"
+                  width="600"
+                  height="340"
+                />
+              </div>
+              <div class="card__body">
+                <span class="card__tag">TypeScript</span>
+                <h3 class="card__title" id="card-4-title">
+                  ATS Resume Builder
+                </h3>
+                <p class="card__excerpt">
+                  High-performance TypeScript-based generator for professional
+                  resume architecture, optimised for applicant tracking systems.
+                </p>
+                <a href="#" class="card__cta" aria-label="View the ATS Resume Builder project details">
+                  View Project
+                  <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+            </article>
+
+          </div><!-- /article-grid -->
+
+        </section><!-- /content-area -->
+
+      </div><!-- /layout-grid -->
+
+    </main><!-- /site-main -->
+
+
+    <!-- =====================================================================
+         FOOTER — id="contact" is the "Contact" nav scroll target.
+    ===================================================================== -->
+    <footer class="site-footer" role="contentinfo" id="contact">
+      <div class="footer__inner">
+
+        <div class="footer__brand">
+          <p class="footer__cta">
+            Explore my craftsmanship. If you need intelligent solutions,
+            let's build the future together.
+          </p>
+          <a
+            href="mailto:shoaibharoon10@gmail.com"
+            class="footer__email"
+            aria-label="Send an email to Muhammad Shoaib"
+          >
+            <i data-lucide="mail" aria-hidden="true"></i>
+            shoaibharoon10@gmail.com
+          </a>
+        </div>
+
+        <div class="footer__links">
+          <nav class="footer__nav" aria-label="Social and contact navigation">
+            <ul role="list">
+              <li>
+                <a
+                  href="https://linkedin.com/in/muhammad-shoaib-haroon"
+                  class="footer__link footer__link--social"
+                  aria-label="Visit Muhammad Shoaib's LinkedIn profile — opens in new tab"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i data-lucide="linkedin" aria-hidden="true"></i>
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/shoaibharoon10"
+                  class="footer__link footer__link--social"
+                  aria-label="Visit Muhammad Shoaib's GitHub profile — opens in new tab"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i data-lucide="github" aria-hidden="true"></i>
+                  GitHub
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <p class="footer__copy">
+            &copy; <span id="currentYear"></span> Muhammad Shoaib.
+            Crafted with vanilla HTML, CSS &amp; JS.
+          </p>
+        </div>
+
+      </div>
+    </footer><!-- /site-footer -->
+
+
+    <!--
+      Lucide CDN loaded just before main.js so the lucide global is available
+      when main.js calls lucide.createIcons(). Both scripts execute after
+      the full DOM is parsed — no defer/async timing issues.
+    -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
