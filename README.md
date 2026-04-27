@@ -1,13 +1,21 @@
-# Muhammad Shoaib — Portfolio v1.0
+# Muhammad Shoaib — Portfolio
 
 **DecodeLabs Industrial Training | Batch 2026**
-**Project 1: Responsive Frontend Interface — The Adaptability Phase**
 
 > "Synthesizing Science, Data, and Code into Intelligent Digital Architecture."
 
 ---
 
-## Project Overview
+## Roadmap Progress
+
+| Week | Project | Status |
+|---|---|---|
+| Week 1 | Responsive Frontend Interface — The Adaptability Phase | ✅ Complete |
+| Week 2 | Backend API Development — The Nervous System | ✅ Complete |
+
+---
+
+## Week 1 — Project Overview
 
 A production-quality personal portfolio built exclusively with **vanilla HTML5, CSS3, and JavaScript** — zero frameworks, zero build tools, zero dependencies beyond Google Fonts and the Lucide icon CDN.
 
@@ -15,9 +23,9 @@ The project demonstrates mastery of the three DecodeLabs Pillars: strategic UX t
 
 | File | Role | Lines |
 |---|---|---|
-| `index.html` | Semantic document structure + content | ~440 |
-| `assets/css/style.css` | Design system + all component styles | ~1,300+ |
-| `assets/js/main.js` | Progressive enhancement logic | ~100 |
+| `index.html` | Semantic document structure + content | ~500+ |
+| `assets/css/style.css` | Design system + all component styles | ~1,500+ |
+| `assets/js/main.js` | Progressive enhancement + API integration | ~420 |
 
 ---
 
@@ -180,44 +188,352 @@ Every font size in the system uses `clamp(MIN, PREFERRED_VW, MAX)`:
 
 ---
 
+---
+
+## Week 2 — Backend API Development (The Nervous System)
+
+### Architecture
+
+```
+Browser (index.html)
+       │
+       │  fetch() / JSON
+       ▼
+┌──────────────────────────────────────────────────┐
+│  server.js  — Express Entry Point                │
+│                                                  │
+│  ┌────────────────────────────────────────────┐  │
+│  │  Middleware Layer                          │  │
+│  │  • express.json()  — body parsing          │  │
+│  │  • CORS handler    — cross-origin allow    │  │
+│  │  • Request logger  — method + path + time  │  │
+│  └────────────────────────────────────────────┘  │
+│                                                  │
+│  ┌─────────────────┐  ┌───────────────────────┐  │
+│  │ GET /api/       │  │ POST /api/contact     │  │
+│  │ projects        │  │                       │  │
+│  │ routes/         │  │ ┌─────────────────┐   │  │
+│  │ projects.js     │  │ │ Blood-Brain     │   │  │
+│  └─────────────────┘  │ │ Barrier         │   │  │
+│                       │ │ (validateContact│   │  │
+│                       │ │  middleware)    │   │  │
+│                       │ └─────────────────┘   │  │
+│                       │ routes/contact.js     │  │
+│                       └───────────────────────┘  │
+│                                                  │
+│  ┌────────────────────────────────────────────┐  │
+│  │  data.json  — Temporal Lobe                │  │
+│  │  { "projects": [...], "contacts": [...] }  │  │
+│  └────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────┘
+```
+
+**Base URL:** `http://localhost:3001`  
+**Runtime:** Node.js ≥ 18 · Express 4  
+**Persistence:** Flat-file JSON (no database; stateless read-mutate-write)
+
+---
+
+### API Endpoints
+
+#### `GET /api/projects`
+
+> Retrieves all portfolio projects from the Temporal Lobe.
+
+| Property | Value |
+|---|---|
+| **HTTP Semantics** | Safe + Idempotent |
+| **Side Effects** | None — read-only |
+| **Success Code** | `200 OK` |
+
+**Request**
+```
+GET http://localhost:3001/api/projects
+```
+No body. No query parameters.
+
+**Response — 200 OK**
+```json
+{
+  "status": "ok",
+  "count": 4,
+  "data": [
+    {
+      "id": 1,
+      "title": "E-Commerce Full-Stack Store",
+      "tag": "Next.js",
+      "excerpt": "Pixel-perfect UI/UX focused dynamic store...",
+      "image": "https://picsum.photos/seed/storefrontshop/600/340",
+      "imageAlt": "A modern e-commerce storefront...",
+      "url": null
+    }
+  ]
+}
+```
+
+**curl**
+```bash
+curl http://localhost:3001/api/projects
+```
+
+---
+
+#### `POST /api/contact`
+
+> Appends a validated contact submission to the Temporal Lobe.
+
+| Property | Value |
+|---|---|
+| **HTTP Semantics** | Unsafe + Non-idempotent |
+| **Side Effects** | Writes a new entry to `contacts[]` in `data.json` |
+| **Gatekeeper** | Blood-Brain Barrier middleware runs before the handler |
+| **Success Code** | `201 Created` |
+
+**Request Body**
+```json
+{
+  "name":    "Ahmad Raza",
+  "email":   "ahmad@example.com",
+  "message": "Let's build something together."
+}
+```
+
+| Field | Type | Required | Constraint |
+|---|---|---|---|
+| `name` | string | Yes | 2–100 characters, non-empty |
+| `email` | string | Yes | Valid `local@domain.tld` format |
+| `message` | string | Yes | 10–2000 characters, non-empty |
+
+**Response — 201 Created**
+```json
+{
+  "status": "created",
+  "message": "Message received. Thank you for reaching out.",
+  "id": 1714200000000
+}
+```
+
+**curl**
+```bash
+curl -X POST http://localhost:3001/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Ahmad Raza","email":"ahmad@example.com","message":"Let us build something together."}'
+```
+
+---
+
+### Blood-Brain Barrier — Validation Layers
+
+The `validateContact` middleware enforces three sequential layers before any data reaches the Temporal Lobe. All violations are **collected in a single pass** and returned together — no waterfall UX.
+
+#### Layer 1 — Presence (Syntactic)
+Checks that all three required fields exist and are non-empty after trimming.
+
+```
+name    → present and non-empty after trim?
+email   → present and non-empty after trim?
+message → present and non-empty after trim?
+```
+
+Errors produced:
+```
+"name is required"
+"email is required"
+"message is required"
+```
+
+#### Layer 2 — Format (Syntactic)
+Validates that `email` matches the RFC 5321-inspired pattern `local@domain.tld`.  
+Only runs if the field was supplied (avoids duplicate `required + format` error).
+
+```
+Pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+```
+
+Errors produced:
+```
+"email format is invalid"
+```
+
+#### Layer 3 — Semantics (Bounds)
+Verifies that values are within meaningful length boundaries.
+
+| Field | Min | Max |
+|---|---|---|
+| `name` | 2 chars | 100 chars |
+| `message` | 10 chars | 2000 chars |
+
+Errors produced:
+```
+"name must be at least 2 characters"
+"name must not exceed 100 characters"
+"message must be at least 10 characters"
+"message must not exceed 2000 characters"
+```
+
+#### BBB Verdict — 400 Response
+When any layer fails, the middleware short-circuits the request and returns all collected errors in one response:
+
+```json
+{
+  "status": "error",
+  "error": "Validation failed",
+  "details": [
+    "email format is invalid",
+    "message must be at least 10 characters"
+  ]
+}
+```
+
+**On success**, field values are normalised (trimmed, email lowercased) in `req.body` before being passed to the route handler.
+
+---
+
+### Status Codes
+
+| Code | Name | When Returned |
+|---|---|---|
+| `200` | OK | `GET /api/projects` returned data successfully |
+| `201` | Created | `POST /api/contact` persisted a new submission |
+| `204` | No Content | CORS preflight `OPTIONS` request resolved |
+| `400` | Bad Request | Request body failed Blood-Brain Barrier validation |
+| `404` | Not Found | No route matched the requested path |
+| `500` | Internal Server Error | `data.json` I/O failure or unhandled exception |
+
+All error responses follow a consistent JSON envelope:
+```json
+{ "status": "error", "error": "<human-readable reason>" }
+```
+The API **never** returns Express's default HTML error page.
+
+---
+
+### Frontend Integration
+
+The Week 2 backend is fully connected to the Week 1 frontend. Three integration points in `assets/js/main.js`:
+
+#### 1. Dynamic Project Rendering
+```
+Page load
+  └─ fetchProjects() → GET /api/projects
+       ├─ Success → renderProjects() replaces skeleton cards with real <article> elements
+       │             lucide.createIcons() re-hydrates injected icons
+       └─ Failure → .grid-error banner shown in the card grid
+```
+All API values pass through `escapeHtml()` before `innerHTML` injection — XSS defence.
+
+#### 2. Contact Form Submit Flow
+```
+User submits form
+  └─ setFormLoading(true)  → button disabled, "Sending…" spinner shown
+       └─ POST /api/contact
+            ├─ 201 → success banner shown, form.reset()
+            ├─ 400 → applyFieldErrors(details[])
+            │         Each error routed to its field <span> by keyword match
+            │         (email → emailError, message → messageError, name → nameError)
+            ├─ 5xx → generic error banner
+            └─ Network Void (fetch throws) → "Network error" banner
+  └─ setFormLoading(false) → button re-enabled in all paths (finally block)
+```
+
+#### 3. Loading States
+| State | Trigger | UI |
+|---|---|---|
+| Projects loading | Page load before API responds | 4 animated shimmer skeleton cards (`aria-busy="true"`) |
+| Form submitting | Between submit and response | Button shows CSS spinner + "Sending…" text, disabled |
+| Form success | `201` received | Green banner, form cleared |
+| Form error | `400` received | Red banner + red border + error text on each failing field |
+| Network Void | `fetch()` throws | Red banner with connection advice |
+
+---
+
 ## Project Structure
 
 ```
 FullStackIntern/
-├── index.html              ← Single-page portfolio document
-├── README.md               ← This file
-└── assets/
-    ├── css/
-    │   └── style.css       ← Design system + 14 component sections
-    ├── js/
-    │   └── main.js         ← Progressive enhancement (4 features)
-    └── images/             ← Reserved for local image assets
+├── index.html                   ← Portfolio document (Week 1 + API integration)
+├── README.md                    ← This file
+├── assets/
+│   ├── css/
+│   │   └── style.css            ← Design system + 16 component sections
+│   ├── js/
+│   │   └── main.js              ← Progressive enhancement + fetch + form logic
+│   └── images/                  ← Reserved for local image assets
+└── server/                      ← Week 2 — Backend Nervous System
+    ├── server.js                ← Express entry point
+    ├── package.json             ← Dependencies (Express only)
+    ├── data.json                ← Temporal Lobe: projects + contacts
+    ├── blueprint.md             ← Detailed API documentation
+    ├── routes/
+    │   ├── projects.js          ← GET  /api/projects
+    │   └── contact.js           ← POST /api/contact
+    └── middleware/
+        └── validateContact.js   ← Blood-Brain Barrier (3-layer validation)
 ```
 
 ---
 
 ## Getting Started
 
-No build step, no package manager, no server required.
+### Week 1 — Frontend only
 
 ```bash
-# Option 1: open directly in browser
+# Open directly in browser
 open index.html
 
-# Option 2: local dev server (recommended for font preconnect to work correctly)
+# Or use a local dev server (recommended — required for the API fetch to work)
 npx serve .
-# or
-python -m http.server 8080
+# then open http://localhost:3000
+```
+
+### Week 2 — Full Stack (Frontend + Backend)
+
+Run both servers simultaneously in two separate terminals:
+
+```bash
+# Terminal 1 — Backend API (port 3001)
+cd server
+npm install        # first run only — installs Express
+npm run dev        # node --watch, auto-restarts on file save
+
+# Terminal 2 — Frontend (any static server on a different port)
+npx serve .        # serves index.html, typically http://localhost:3000
+```
+
+The frontend automatically targets `http://localhost:3001` — no config needed.
+
+**Quick smoke tests (backend only):**
+```bash
+# GET all projects → 200
+curl http://localhost:3001/api/projects
+
+# Valid contact submission → 201
+curl -X POST http://localhost:3001/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test User","email":"test@example.com","message":"Hello from the terminal."}'
+
+# Trigger Blood-Brain Barrier (name too short, message too short) → 400
+curl -X POST http://localhost:3001/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"T","email":"bad-email","message":"Hi"}'
 ```
 
 ---
 
 ## Evaluator Notes
 
-- All code is hand-written. No code generators, CSS frameworks (Bootstrap / Tailwind), or JS libraries (jQuery / React) were used at any point.
+### Week 1
+- All code is hand-written. No CSS frameworks (Bootstrap / Tailwind) or JS libraries (jQuery / React) were used at any point.
 - Comments in every file explain the *why* behind each decision, not just the *what*.
-- The three CSS variables `--color-mocha`, `--color-blue`, and `--color-grey` can be found referenced throughout all 14 CSS sections — a single token change propagates to every component.
-- The WCAG compliance table above maps to specific code locations. Every claim is verifiable in the source.
+- The three palette tokens `--color-mocha`, `--color-blue`, and `--color-grey` propagate through all 16 CSS sections via semantic aliases — a single token change rebrands the entire UI.
+- The WCAG compliance table maps to specific code locations. Every claim is verifiable in the source.
+
+### Week 2
+- The API is **stateless** — no session, no in-memory cache. Every request carries everything the server needs.
+- The Blood-Brain Barrier collects **all** validation errors in a single pass and returns them together, avoiding waterfall UX (user fixes one error, re-submits, finds the next).
+- `data.json` is read fresh on every `GET /api/projects` request so the server can be restarted at any time without stale data.
+- All API string values from the JSON response are passed through `escapeHtml()` before `innerHTML` injection — no XSS surface.
+- The server **never** returns Express's default HTML error page; all errors are structured JSON with a consistent `{ status, error }` envelope.
 
 ---
 

@@ -1,0 +1,56 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "E-Commerce Full-Stack Store",
+      "tag": "Next.js",
+      "excerpt": "Pixel-perfect UI/UX focused dynamic store built with Next.js App Router, featuring server components and optimised data fetching.",
+      "image": "https://picsum.photos/seed/storefrontshop/600/340",
+      "imageAlt": "A modern e-commerce storefront with product grid, clean typography, and a warm neutral colour palette",
+      "url": null
+    },
+    {
+      "id": 2,
+      "title": "Physical AI Interactive Textbook",
+      "tag": "Agentic AI",
+      "excerpt": "AI-powered interactive book with a RAG-chatbot (Gemini) and real-time Urdu translation support for multilingual learners.",
+      "image": "https://picsum.photos/seed/interactivebook/600/340",
+      "imageAlt": "An AI-powered interactive digital textbook with a bilingual chat panel",
+      "url": null
+    },
+    {
+      "id": 3,
+      "title": "TaskFlow AI Chatbot",
+      "tag": "Full Stack PWA",
+      "excerpt": "Full-stack PWA task manager with natural-language commands, Recharts analytics dashboard, and offline-first architecture.",
+      "image": "https://picsum.photos/seed/taskmanager/600/340",
+      "imageAlt": "A full-stack task management dashboard with analytics charts and an AI command bar",
+      "url": null
+    },
+    {
+      "id": 4,
+      "title": "ATS Resume Builder",
+      "tag": "TypeScript",
+      "excerpt": "High-performance TypeScript-based generator for professional resume architecture, optimised for applicant tracking systems.",
+      "image": "https://picsum.photos/seed/resumebuilder/600/340",
+      "imageAlt": "A professional resume builder with template selection and live ATS-score preview",
+      "url": null
+    }
+  ],
+  "contacts": [
+    {
+      "id": 1777290144664,
+      "name": "shoaib",
+      "email": "shoaibharoon10@gmail.com",
+      "message": "Testing localhost 123",
+      "receivedAt": "2026-04-27T11:42:24.664Z"
+    },
+    {
+      "id": 1777291028396,
+      "name": "shoaib",
+      "email": "shoaibharoon10@gmail.com",
+      "message": "I would like to collaborate on a new AI project.",
+      "receivedAt": "2026-04-27T11:57:08.396Z"
+    }
+  ]
+}

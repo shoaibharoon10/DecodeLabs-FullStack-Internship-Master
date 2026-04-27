@@ -10,6 +10,16 @@
     <title>Muhammad Shoaib | Agentic AI Developer & Full Stack Architect</title>
 
     <!--
+      Inline SVG favicon — no external file needed, no 404 on /favicon.ico.
+      Renders the "MS" brand mark at 32×32px using the Mocha Mousse palette.
+    -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23A5856F'/%3E%3Ctext x='16' y='22' font-family='system-ui%2Csans-serif' font-weight='bold' font-size='14' fill='white' text-anchor='middle'%3EMS%3C/text%3E%3C/svg%3E"
+    />
+
+    <!--
       INLINE THEME SCRIPT — runs synchronously before first paint.
       Reads localStorage and applies data-theme="dark" to <html> immediately,
       preventing a Flash of Unstyled Content (FOUC) for returning dark-mode users.
@@ -64,6 +74,30 @@
           structure on all viewport sizes.
         -->
         <div class="header__controls">
+
+          <!--
+            API STATUS INDICATOR — "The Pulse"
+            ─────────────────────────────────
+            role="status"      → implicit aria-live="polite" + aria-atomic="true"
+                                  AT announces state changes without stealing focus
+            aria-label         → updated by JS to match the current state;
+                                  provides context ("API server status: online")
+                                  even when the visible label is hidden on mobile
+            .api-status__dot   → purely decorative; aria-hidden keeps it silent
+            .api-status__label → hidden on mobile (dot alone is sufficient);
+                                  visible at 640px+ where header has breathing room
+          -->
+          <div
+            class="api-status"
+            id="apiStatus"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            aria-label="API server status: checking"
+          >
+            <span class="api-status__dot" aria-hidden="true"></span>
+            <span class="api-status__label">API: Checking…</span>
+          </div>
 
           <!--
             Theme Toggle — switches between Light (default) and Grounded Dark.
@@ -263,120 +297,53 @@
 
           <h2 class="section__heading" id="featured-title">Featured Projects</h2>
 
-          <div class="article-grid">
+          <!--
+            id="projectGrid" — JS fetch target.
+            aria-busy="true" signals to AT that content is loading;
+            set to "false" by JS after renderProjects() or the error state.
+            Skeleton cards are aria-hidden — they carry no real content.
+          -->
+          <div class="article-grid" id="projectGrid" aria-busy="true" aria-label="Loading projects">
 
-            <!--
-              Card 1: first image gets fetchpriority="high" — it is closest
-              to the viewport on wide screens and a likely LCP candidate.
-            -->
-            <article class="card" aria-labelledby="card-1-title">
-              <div class="card__image-wrap">
-                <img
-                  src="https://picsum.photos/seed/storefrontshop/600/340"
-                  alt="A modern e-commerce storefront with product grid, clean typography, and a warm neutral colour palette"
-                  class="card__image"
-                  loading="lazy"
-                  fetchpriority="high"
-                  width="600"
-                  height="340"
-                />
-              </div>
+            <div class="card card--skeleton" aria-hidden="true">
+              <div class="card__image-wrap skeleton-pulse"></div>
               <div class="card__body">
-                <span class="card__tag">Next.js</span>
-                <h3 class="card__title" id="card-1-title">
-                  E-Commerce Full-Stack Store
-                </h3>
-                <p class="card__excerpt">
-                  Pixel-perfect UI/UX focused dynamic store built with Next.js
-                  App Router, featuring server components and optimised data fetching.
-                </p>
-                <a href="#" class="card__cta" aria-label="View the E-Commerce Full-Stack Store project details">
-                  View Project
-                  <i data-lucide="arrow-right" aria-hidden="true"></i>
-                </a>
+                <div class="skeleton-line skeleton-line--xs  skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--md  skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--full skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--sm  skeleton-pulse"></div>
               </div>
-            </article>
+            </div>
 
-            <article class="card" aria-labelledby="card-2-title">
-              <div class="card__image-wrap">
-                <img
-                  src="https://picsum.photos/seed/interactivebook/600/340"
-                  alt="An AI-powered interactive digital textbook with a bilingual chat panel"
-                  class="card__image"
-                  loading="lazy"
-                  width="600"
-                  height="340"
-                />
-              </div>
+            <div class="card card--skeleton" aria-hidden="true">
+              <div class="card__image-wrap skeleton-pulse"></div>
               <div class="card__body">
-                <span class="card__tag">Agentic AI</span>
-                <h3 class="card__title" id="card-2-title">
-                  Physical AI Interactive Textbook
-                </h3>
-                <p class="card__excerpt">
-                  AI-powered interactive book with a RAG-chatbot (Gemini) and
-                  real-time Urdu translation support for multilingual learners.
-                </p>
-                <a href="#" class="card__cta" aria-label="View the Physical AI Interactive Textbook project details">
-                  View Project
-                  <i data-lucide="arrow-right" aria-hidden="true"></i>
-                </a>
+                <div class="skeleton-line skeleton-line--xs  skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--md  skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--full skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--sm  skeleton-pulse"></div>
               </div>
-            </article>
+            </div>
 
-            <article class="card" aria-labelledby="card-3-title">
-              <div class="card__image-wrap">
-                <img
-                  src="https://picsum.photos/seed/taskmanager/600/340"
-                  alt="A full-stack task management dashboard with analytics charts and an AI command bar"
-                  class="card__image"
-                  loading="lazy"
-                  width="600"
-                  height="340"
-                />
-              </div>
+            <div class="card card--skeleton" aria-hidden="true">
+              <div class="card__image-wrap skeleton-pulse"></div>
               <div class="card__body">
-                <span class="card__tag">Full Stack PWA</span>
-                <h3 class="card__title" id="card-3-title">
-                  TaskFlow AI Chatbot
-                </h3>
-                <p class="card__excerpt">
-                  Full-stack PWA task manager with natural-language commands,
-                  Recharts analytics dashboard, and offline-first architecture.
-                </p>
-                <a href="#" class="card__cta" aria-label="View the TaskFlow AI Chatbot project details">
-                  View Project
-                  <i data-lucide="arrow-right" aria-hidden="true"></i>
-                </a>
+                <div class="skeleton-line skeleton-line--xs  skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--md  skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--full skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--sm  skeleton-pulse"></div>
               </div>
-            </article>
+            </div>
 
-            <article class="card" aria-labelledby="card-4-title">
-              <div class="card__image-wrap">
-                <img
-                  src="https://picsum.photos/seed/resumebuilder/600/340"
-                  alt="A professional resume builder with template selection and live ATS-score preview"
-                  class="card__image"
-                  loading="lazy"
-                  width="600"
-                  height="340"
-                />
-              </div>
+            <div class="card card--skeleton" aria-hidden="true">
+              <div class="card__image-wrap skeleton-pulse"></div>
               <div class="card__body">
-                <span class="card__tag">TypeScript</span>
-                <h3 class="card__title" id="card-4-title">
-                  ATS Resume Builder
-                </h3>
-                <p class="card__excerpt">
-                  High-performance TypeScript-based generator for professional
-                  resume architecture, optimised for applicant tracking systems.
-                </p>
-                <a href="#" class="card__cta" aria-label="View the ATS Resume Builder project details">
-                  View Project
-                  <i data-lucide="arrow-right" aria-hidden="true"></i>
-                </a>
+                <div class="skeleton-line skeleton-line--xs  skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--md  skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--full skeleton-pulse"></div>
+                <div class="skeleton-line skeleton-line--sm  skeleton-pulse"></div>
               </div>
-            </article>
+            </div>
 
           </div><!-- /article-grid -->
 
@@ -384,13 +351,124 @@
 
       </div><!-- /layout-grid -->
 
+      <!-- =================================================================
+           CONTACT SECTION — id="contact" is the "Contact" nav scroll target.
+           Moved here (from footer) so the nav links to the form, not the
+           footer bar. The form submits to POST /api/contact via JS.
+           ================================================================= -->
+      <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+        <div class="contact-inner">
+
+          <header class="contact-header">
+            <h2 class="section__heading" id="contact-heading">Get In Touch</h2>
+            <p class="contact-subtitle">
+              Have a project in mind? Let's build something together.
+            </p>
+          </header>
+
+          <form class="contact-form" id="contactForm" novalidate>
+
+            <!--
+              Status banner — hidden by default.
+              role="alert" + aria-live="polite" ensures AT announces the
+              outcome (success or error) without stealing focus.
+            -->
+            <div
+              class="form-status"
+              id="formStatus"
+              role="alert"
+              aria-live="polite"
+              hidden
+            ></div>
+
+            <!-- Name + Email row — stacks on mobile, side-by-side at 640px+ -->
+            <div class="form-row">
+
+              <div class="form-group">
+                <label class="form-label" for="contactName">
+                  Full Name
+                  <span class="form-required" aria-label="required">*</span>
+                </label>
+                <input
+                  class="form-input"
+                  type="text"
+                  id="contactName"
+                  name="name"
+                  placeholder="Ahmad Raza"
+                  autocomplete="name"
+                  required
+                />
+                <!-- aria-live="polite" so AT reads the error when it appears -->
+                <span class="field-error" id="nameError" aria-live="polite"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="contactEmail">
+                  Email Address
+                  <span class="form-required" aria-label="required">*</span>
+                </label>
+                <input
+                  class="form-input"
+                  type="email"
+                  id="contactEmail"
+                  name="email"
+                  placeholder="ahmad@example.com"
+                  autocomplete="email"
+                  required
+                />
+                <span class="field-error" id="emailError" aria-live="polite"></span>
+              </div>
+
+            </div><!-- /form-row -->
+
+            <div class="form-group">
+              <label class="form-label" for="contactMessage">
+                Message
+                <span class="form-required" aria-label="required">*</span>
+              </label>
+              <textarea
+                class="form-textarea"
+                id="contactMessage"
+                name="message"
+                placeholder="Tell me about your project, timeline, and goals..."
+                rows="5"
+                required
+              ></textarea>
+              <span class="field-error" id="messageError" aria-live="polite"></span>
+            </div>
+
+            <!--
+              .submit-label wraps icon + text so both can be hidden together
+              when the loading state swaps them for the CSS spinner.
+            -->
+            <button class="form-submit" id="contactSubmit" type="submit">
+              <!--
+                Two states toggled by CSS via .form-submit--loading:
+                  · idle    — .submit-label  visible  (.submit-loading hidden)
+                  · loading — .submit-loading visible (.submit-label hidden)
+              -->
+              <span class="submit-label">
+                <i data-lucide="send" aria-hidden="true"></i>
+                Send Message
+              </span>
+              <span class="submit-loading" aria-hidden="true">
+                <span class="submit-spinner"></span>
+                Sending…
+              </span>
+            </button>
+
+          </form>
+
+        </div>
+      </section><!-- /contact-section -->
+
     </main><!-- /site-main -->
 
 
     <!-- =====================================================================
          FOOTER — id="contact" is the "Contact" nav scroll target.
     ===================================================================== -->
-    <footer class="site-footer" role="contentinfo" id="contact">
+    <footer class="site-footer" role="contentinfo">
       <div class="footer__inner">
 
         <div class="footer__brand">
@@ -419,7 +497,7 @@
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i data-lucide="linkedin" aria-hidden="true"></i>
+                  <i data-lucide="external-link" aria-hidden="true"></i>
                   LinkedIn
                 </a>
               </li>
@@ -431,7 +509,7 @@
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i data-lucide="github" aria-hidden="true"></i>
+                  <i data-lucide="code-2" aria-hidden="true"></i>
                   GitHub
                 </a>
               </li>
