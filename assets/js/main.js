@@ -214,15 +214,21 @@ function buildCardHTML(project, index) {
         <span class="card__tag">${escapeHtml(tag)}</span>
         <h3 class="card__title" id="card-${id}-title">${escapeHtml(title)}</h3>
         <p class="card__excerpt">${escapeHtml(excerpt)}</p>
-        <a
-          href="${url ? escapeHtml(url) : '#'}"
+        ${url
+          ? `<a
+          href="${escapeHtml(url)}"
           class="card__cta"
-          aria-label="View the ${escapeHtml(title)} project details"
-          ${url ? 'target="_blank" rel="noopener noreferrer"' : ''}
+          aria-label="View the ${escapeHtml(title)} project live"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           View Project
           <i data-lucide="arrow-right" aria-hidden="true"></i>
-        </a>
+        </a>`
+          : `<span class="card__cta card__cta--disabled" aria-label="${escapeHtml(title)} — coming soon">
+          Coming Soon
+        </span>`
+        }
       </div>
     </article>`;
 }

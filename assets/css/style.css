@@ -150,6 +150,39 @@
   --color-success:        #4dcc80;
   --color-success-bg:     rgba(77, 204, 128, 0.12);
   --color-success-border: rgba(77, 204, 128, 0.30);
+
+  /* — Tag contrast tokens (scoped to dark theme) —
+     Both .card__tag and .tag share these tokens so a single token change
+     updates every pill-shaped label site-wide.
+     #F2F0EA on #3d2b22 = ~13:1 contrast — clears WCAG AAA for small text. */
+  --tag-bg:   var(--color-mocha-deep);   /* #3d2b22 deep warm mocha surface  */
+  --tag-text: #F2F0EA;                   /* Moonlit Grey — primary brand grey */
+}
+
+
+/* --------------------------------------------------------------------------
+   1c. DARK THEME — Component-level contrast patches
+   These rules target elements whose backgrounds are not driven by semantic
+   alias tokens and would therefore NOT auto-adapt when the token block above
+   fires. Kept here alongside the token block so all dark-mode decisions live
+   in one place rather than scattered through component sections.
+   -------------------------------------------------------------------------- */
+
+/* Project card tech tags: background via --color-grey (overridden dark) */
+[data-theme="dark"] .card__tag {
+  background-color: var(--tag-bg);
+  color:            var(--tag-text);
+}
+
+/* Skills cloud tags: background via --color-blue-light (NOT overridden) */
+[data-theme="dark"] .tag {
+  background-color: var(--tag-bg);
+  color:            var(--tag-text);
+}
+
+[data-theme="dark"] .tag:hover {
+  background-color: var(--color-mocha);
+  color:            var(--tag-text);
 }
 
 
@@ -870,6 +903,14 @@ svg.lucide {
   background-color: var(--color-mocha-dark);
   color: var(--text-inverse);
   transform: translateX(2px);
+}
+
+.card__cta--disabled {
+  background-color: var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.65;
 }
 
 
