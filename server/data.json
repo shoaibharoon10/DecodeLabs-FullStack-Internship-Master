@@ -16,7 +16,7 @@
       "excerpt": "AI-powered interactive book with a RAG-chatbot (Gemini) and real-time Urdu translation support for multilingual learners.",
       "image": "assets/images/projects/ai-textbook.jpg",
       "imageAlt": "An AI-powered interactive digital textbook with a bilingual chat panel",
-      "url": null
+      "url": "https://humanoid-robotics-course-book.vercel.app/"
     },
     {
       "id": 3,
@@ -25,7 +25,7 @@
       "excerpt": "Full-stack PWA task manager with natural-language commands, Recharts analytics dashboard, and offline-first architecture.",
       "image": "assets/images/projects/taskflow-chatbot.jpg",
       "imageAlt": "A full-stack task management dashboard with analytics charts and an AI command bar",
-      "url": null
+      "url": "https://todo-ai-chatbot-phase3.vercel.app/signup"
     },
     {
       "id": 4,
@@ -34,7 +34,7 @@
       "excerpt": "High-performance TypeScript-based generator for professional resume architecture, optimised for applicant tracking systems.",
       "image": "assets/images/projects/ats-resume-builder.jpg",
       "imageAlt": "A professional resume builder with template selection and live ATS-score preview",
-      "url": null
+      "url": "https://resume-builder-sage-tau.vercel.app/"
     }
   ],
   "contacts": [
